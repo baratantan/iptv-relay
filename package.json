@@ -1,0 +1,12 @@
+{
+  "name": "iptv-relay",
+  "version": "2.0.0",
+  "description": "Full-session Stalker relay (Vercel serverless) from a non-blocked IP",
+  "main": "api/relay.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
