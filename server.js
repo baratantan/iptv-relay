@@ -191,9 +191,8 @@ const server = http.createServer(async (req, res) => {
   const b = normalizeMacHost(portal).replace(/\/+$/, "");
   try {
     const host = new URL(b).hostname.toLowerCase();
-    if (ALLOW_HOSTS.length && !ALLOW_HOSTS.includes(host)) {
-      return send(res, 403, { error: "host not allowed" });
-    }
+    // v2: أُلغي قيد المضيفين نهائيًا — الحماية عبر السرّ فقط. أي بوابة تُقبل.
+    void host;
   } catch { return send(res, 400, { error: "bad portal url" }); }
 
   const login = await stalkerLogin(b, mac);
