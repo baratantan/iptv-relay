@@ -119,8 +119,10 @@ async function buildM3U(b, mac, login, limit) {
       const cmd = ch.cmd || (ch.cmds && ch.cmds[0] && ch.cmds[0].url) || "";
       let url = null;
       if (cmd) {
-        const direct = /^https?:\/\//i.test(cmd.replace(/^ffmpeg\s+/i, "")) ? cmd.replace(/^ffmpeg\s+/i, "").trim() : null;
-        url = direct || await stalkerCreateLink(b, mac, login.token, login.prefix, cmd);
+        // v2: لا تعتبر روابط localhost/ch جاهزة — يجب تحليلها عبر create_link
+        const stripped = cmd.replace(/^ffmpeg\s+/i, "").trim();
+        const isReal = /^https?:\/\//i.test(stripped) && !/localhost|127\.0\.0\.1|\/ch\//i.test(stripped);
+        url = isReal ? stripped : await stalkerCreateLink(b, mac, login.token, login.prefix, cmd);
       }
       results[i] = { ch, url };
     }
